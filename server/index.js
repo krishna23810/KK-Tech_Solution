@@ -5,7 +5,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const dotenv = require('dotenv');
-// const path = require('path');
 
 // Load environment variables
 dotenv.config();

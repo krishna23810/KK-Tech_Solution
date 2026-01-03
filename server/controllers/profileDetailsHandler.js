@@ -259,7 +259,7 @@ exports.getEnrolledCourses = async (req, res) => {
                 console.log("Starting getCourseProgress function");
                 const course = await coursesProgress.findById(progressId).populate('courseId')
                 .populate({path:"courseId", populate:{path:"sections", populate:{path:"subsections"}}});
-                console.log("course progress:", course);
+                // console.log("course progress:", course);
                 return course;
             } catch (error) {
                 console.error("Error getting course progress:", error);
@@ -290,7 +290,7 @@ exports.getEnrolledCourses = async (req, res) => {
 
         // console.log("User enrolled courses:", courses);
         // console.log("User courses progress:", coursesProgress);
-        console.log("user all enrolled courses :" ,allprogressData);
+        // console.log("user all enrolled courses :" ,allprogressData);
         return res.status(200).json({
             success: true,
             message: 'Enrolled courses retrieved successfully',

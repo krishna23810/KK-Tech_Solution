@@ -11,11 +11,12 @@ exports.isAuthenticated = async (req, res, next) => {
 
     try {
         // Extract token from cookies, body, or headers
-        const token = req.cookies.token
-            || req.body.token
-            ||  req.headers("Authorization").replace('Bearer ', '');
 
-        // Token not found
+        const token = (req.cookies && req.cookies.token)
+            || (req.body && req.body.token)
+            || (req.headers.Authorization && req.headers.Authorization.replace('Bearer ', ''));
+
+        // Token not found  
         if (!token) {
             return res.status(401).json({
                 success: false,
