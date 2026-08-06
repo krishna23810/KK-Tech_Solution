@@ -40,13 +40,20 @@ app.use(cookieParser());
 // });
 
 
-// CORS configuration
-// app.use(cors({
-//     origin:'http://localhost:3000', // Adjust this to your frontend URL
-//     credentials: true,
-// }));
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://kktechsolution.vercel.app',
+    process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed) || allowed.startsWith(origin))) {
+            callback(null, true);
+        } else {
+            callback(null, true);
+        }
+    },
     credentials: true,
 }));
 

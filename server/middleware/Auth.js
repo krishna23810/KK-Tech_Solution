@@ -14,7 +14,9 @@ exports.isAuthenticated = async (req, res, next) => {
 
         const token = (req.cookies && req.cookies.token)
             || (req.body && req.body.token)
-            || (req.headers.Authorization && req.headers.Authorization.replace('Bearer ', ''));
+            || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''))
+            || (req.headers.Authorization && req.headers.Authorization.replace('Bearer ', ''))
+            || (req.header && req.header('Authorization')?.replace('Bearer ', ''));
 
         // Token not found  
         if (!token) {
