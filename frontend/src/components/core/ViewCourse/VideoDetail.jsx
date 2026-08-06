@@ -38,6 +38,7 @@ const VideoDetail = () => {
     const [loading, setLoading] = useState(false);
 
     const isFirstVideo = () => {
+        if (!CourseSectionData || !CourseSectionData.length) return false;
         const currentSectionIndex = CourseSectionData.findIndex(section => section._id === sectionId);
         const currentSubSectionIndex = CourseSectionData?.[currentSectionIndex]?.subsections?.findIndex(sub => sub._id === subSectionId);
         if (currentSubSectionIndex === 0 && currentSectionIndex === 0) return true;
@@ -45,6 +46,7 @@ const VideoDetail = () => {
     }
 
     const isLastVideo = () => {
+        if (!CourseSectionData || !CourseSectionData.length) return false;
         const currentSectionIndex = CourseSectionData.findIndex(section => section._id === sectionId);
         const subSectionLength = CourseSectionData?.[currentSectionIndex]?.subsections?.length || 0;
         const currentSubSectionIndex = CourseSectionData?.[currentSectionIndex]?.subsections?.findIndex(sub => sub._id === subSectionId);
@@ -103,11 +105,11 @@ const VideoDetail = () => {
 
     useEffect(() => {
         const setVideoSpecficDetails = async () => {
-            if (!CourseSectionData.length) return;
+            if (!CourseSectionData || !CourseSectionData.length) return;
             if (!courseId || !sectionId || !subSectionId) return navigate("/dashboard/enrolled-courses");
 
-            const filteredSection = CourseSectionData.filter((section) => section._id === sectionId);
-            const filteredVideoData = filteredSection?.[0].subsections.filter((video) => video._id === subSectionId);
+            const filteredSection = CourseSectionData?.filter((section) => section._id === sectionId) || [];
+            const filteredVideoData = filteredSection?.[0]?.subsections?.filter((video) => video._id === subSectionId) || [];
             setVideodata(filteredVideoData?.[0] || null);
             setVideoEnding(false);
         }

@@ -35,9 +35,9 @@ const ViewCourse = () => {
 
     console.log("CompletedLectures", CompletedLectures);
     return (
-        <div className="relative flex min-h-[cal(100vh-3rem)]">
+        <div className="relative flex min-h-[calc(100vh-3rem)]">
             <VideoSideBar setReviewModal={setReviewModal} />
-            <div className=" flex-1 h-[cal(100vh-3rem)] overflow-auto">
+            <div className=" flex-1 h-[calc(100vh-3rem)] overflow-auto">
                 <div className="mx-auto w-11/12 max-x-[1000px] py-10">
                     <Outlet />
                 </div>
