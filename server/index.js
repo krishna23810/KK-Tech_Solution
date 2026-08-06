@@ -18,7 +18,6 @@ const contactRoutes = require('./routes/contactUs');
 
 // Import utilities
 const { connectDB } = require('./config/dbconnection');
-const { uploadImage } = require('./utils/imageUploder');
 // const { logInfo, logError } = require('./utils/logger');
 
 
@@ -60,8 +59,7 @@ app.use(fileUpload({
     // abortOnLimit: true
 }));
 
-// Cloudinary configuration
-uploadImage();
+// Cloudinary configuration is initialized in utils/imageUploder.js
 
 
 // Routes

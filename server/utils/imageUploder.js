@@ -8,13 +8,13 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-exports.uploadImage = async (file, folder, height, quality) => {
+const uploadImage = async (file, folder, height, quality) => {
     // Check if the file is provided
     if (!file) {
-         Error('No file provided for upload');
+        throw new Error('No file provided for upload');
     }
     // create an option object
-    const options = {folder};
+    const options = { folder };
     if (height) {
         options.height = height;
     }
@@ -29,6 +29,9 @@ exports.uploadImage = async (file, folder, height, quality) => {
         return result;
     } catch (error) {
         console.error('Error uploading image:', error);
-        Error('Image upload failed');
+        throw error;
     }
-}
+};
+
+module.exports = uploadImage;
+module.exports.uploadImage = uploadImage;
