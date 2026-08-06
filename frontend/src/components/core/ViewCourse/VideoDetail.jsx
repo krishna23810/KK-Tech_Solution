@@ -277,7 +277,7 @@ const VideoDetail = () => {
                 <div className="mt-4 pt-4 border-t border-slate-700">
                     <div className="flex items-center text-sm text-gray-400">
                         <span className="mr-4">Duration: {videodata?.duration || 'N/A'}</span>
-                        <span>Lecture {CourseSectionData.findIndex(s => s._id === sectionId) + 1}.{CourseSectionData.find(s => s._id === sectionId)?.subsections?.findIndex(v => v._id === subSectionId) + 1}</span>
+                        <span>Lecture {CourseSectionData ? (CourseSectionData.findIndex(s => s._id === sectionId) + 1) : 1}.{(CourseSectionData?.find(s => s._id === sectionId)?.subsections?.findIndex(v => v._id === subSectionId) ?? 0) + 1}</span>
                     </div>
                 </div>
             </div>

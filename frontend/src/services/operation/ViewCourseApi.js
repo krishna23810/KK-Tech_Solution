@@ -9,9 +9,12 @@ export async function getViewCourse(courseId, token) {
     try {
         console.log("courseId in api", courseId, token);
         console.log("GET_COURSE_DETAILS_API(courseId)", GET_COURSE_DETAILS_API.replace(':courseId', courseId));
-        const response = await apiConnector("GET", GET_COURSE_DETAILS_API.replace(':courseId', courseId), {
-            Authorization: `Bearer ${token}`
-        });
+        const response = await apiConnector(
+            "GET",
+            GET_COURSE_DETAILS_API.replace(':courseId', courseId),
+            null,
+            { Authorization: `Bearer ${token}` }
+        );
         console.log("View course response", response);
 
         if (response) {
