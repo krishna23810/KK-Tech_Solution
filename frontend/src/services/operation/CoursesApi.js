@@ -1,4 +1,3 @@
-import { setLoading } from '../../slice/authSlice';
 import { apiConnector } from '../apiconnector';
 import { coursesEndpoints } from '../apis';
 import { toast } from 'react-hot-toast';

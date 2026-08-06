@@ -11,10 +11,6 @@ import { IoCaretDownCircleOutline } from "react-icons/io5";
 import ProfileDropDown from './profileDropDown';
 import { useDispatch } from 'react-redux';
 import {setCategory} from '../../slice/profileSlice';
-import {logout} from "../../services/operation/AuthApi";
-import { useNavigate } from 'react-router-dom';
-// import ProfilePic from  '../../assets/profilePic/WIN_20250803_14_51_50_Pro.jpg'
-
 
 const NavBar = () => {
     const { token } = useSelector((state) => state.auth);
@@ -23,16 +19,7 @@ const NavBar = () => {
     const { user } = useSelector((state) => state.profile);
     const profilePic = user?.additionalInfo?.profilePicture ;
     const account = "Instructor";
-    const navigate = useNavigate();
 
-    // console.log("User data:", user);
-    // console.log("Token:", token);
-    // console.log("Profile ", account);
-
-    // console.log("Profile Picture: ", profilePic);
-
-    const [sublinks, setSublinks] = useState([]);
-   
     const dispatch = useDispatch();
     const getCategories = useCallback(async () => {
         try {
@@ -41,15 +28,12 @@ const NavBar = () => {
             if (result.status === 200) {
                 dispatch(setCategory(result.data.categories));
                 localStorage.setItem("category", JSON.stringify(result.data.categories));
-                setSublinks(result.data.categories);
             } else {
-                setSublinks([]);
                 console.error("Failed to fetch categories or invalid data");
             }
         }
         catch (error) {
             console.log(error);
-
         }
     }, [dispatch]);
 

@@ -1,4 +1,3 @@
-import { toast } from "react-hot-toast";
 import { apiConnector } from "../apiconnector";
 import { categoriesApi } from "../apis";
 
