@@ -69,7 +69,7 @@ const NavBar = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 h-[80px] flex items-center justify-center bg-white border-b border-slate-200 shadow-sm z-50">
+        <header className="fixed top-0 left-0 right-0 h-[50px] flex items-center justify-center bg-white border-b border-slate-200 shadow-sm z-50">
             <div className="w-11/12 max-w-7xl text-slate-800 p-4 flex justify-between items-center">
                 {/* Logo */}
                 <Link to="/" className="flex items-center">
@@ -106,11 +106,10 @@ const NavBar = () => {
                                 ) : (
                                     <Link
                                         to={link.path}
-                                        className={`text-sm font-semibold px-4 py-2 rounded-lg transition-all ${
-                                            currentPage(link?.path)
-                                                ? "bg-amber-400 text-slate-950 shadow-sm font-bold"
-                                                : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
-                                        }`}
+                                        className={`text-sm font-semibold px-4 py-2 rounded-lg transition-all ${currentPage(link?.path)
+                                            ? "bg-amber-400 text-slate-950 shadow-sm font-bold"
+                                            : "text-slate-700 hover:text-slate-950 hover:bg-slate-100"
+                                            }`}
                                     >
                                         {link.title}
                                     </Link>

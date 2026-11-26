@@ -22,7 +22,7 @@ const SideBar = () => {
     const displayName = user?.firstName || user?.name || "User";
 
     return (
-        <aside className="w-64 min-w-[16rem] min-h-[calc(100vh-80px)] bg-white border-r border-slate-200 flex flex-col justify-between py-6 px-3">
+        <aside className="w-64 bg-white border-r border-slate-200 flex flex-col justify-between py-6 px-3">
             <div className="flex flex-col space-y-1">
                 {/* User Greeting Header */}
                 <div className="px-4 pb-4 mb-2 border-b border-slate-100">

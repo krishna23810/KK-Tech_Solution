@@ -17,7 +17,7 @@ const MyProfile = () => {
         : null;
 
     return (
-        <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 py-2">
+        <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
             {/* Header Title & Badge */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-slate-200">
                 <div>
