@@ -23,7 +23,7 @@ const SideBar = () => {
 
 
     return (
-        <div className="min-w-max h-[calc(100vh -4rem)] bg-gray-800 text-white ">
+        <div className="min-w-max min-h-[calc(100vh-80px)] bg-gray-800 text-white ">
             <div className="p-4">
                 <h2 className="text-xl font-bold">Dashboard</h2>
                 <p className="text-sm">Welcome, {user ? user.name : "User"}</p>
