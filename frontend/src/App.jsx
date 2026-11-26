@@ -34,7 +34,7 @@ function App() {
   // console.log("user in app", user);
   // console.log("account type", user?.accountType);
   return (
-    <div className="w-screen min-h-screen bg-gray-700 flex flex-col font-poppins">
+    <div className="w-screen min-h-screen bg-slate-50 flex flex-col font-poppins text-slate-900">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
