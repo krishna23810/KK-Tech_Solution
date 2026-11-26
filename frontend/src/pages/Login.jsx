@@ -33,9 +33,9 @@ export default function Login() {
     };
 
     return (
-        <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-6 transition-all">
+        <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-6 sm:p-8 transition-all">
             {/* Brand Logo */}
-            <div className="flex justify-center mb-5">
+            <div className="flex justify-center mb-4">
                 <Link to="/">
                     <img
                         src={Logo}
@@ -46,16 +46,16 @@ export default function Login() {
             </div>
 
             {/* Header Titles */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-6">
                 <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Welcome Back</h1>
-                <p className="text-sm text-slate-500 mt-1">Enter your credentials to access your account</p>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">Enter your credentials to access your account</p>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {/* Email Input */}
                 <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
                         Email Address
                     </label>
                     <div className="relative">
@@ -76,7 +76,7 @@ export default function Login() {
 
                 {/* Password Input */}
                 <div>
-                    <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center justify-between mb-1">
                         <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
                             Password
                         </label>
@@ -116,14 +116,14 @@ export default function Login() {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 px-4 rounded-xl font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm hover:shadow transition-all duration-200 disabled:opacity-50 mt-2"
+                    className="w-full py-2.5 px-4 rounded-xl font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm hover:shadow transition-all duration-200 disabled:opacity-50 mt-1"
                 >
                     {isSubmitting ? "Signing in..." : "Sign In"}
                 </button>
 
                 {/* Switch to Signup */}
                 <div className="text-center pt-2">
-                    <p className="text-sm text-slate-600">
+                    <p className="text-xs sm:text-sm text-slate-600">
                         Don't have an account?{" "}
                         <Link
                             to="/signup"
