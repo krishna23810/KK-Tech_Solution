@@ -1,12 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { resetPassword } from "../services/operation/AuthApi";
-import { useSelector } from "react-redux";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import Logo from "../assets/comman/logo-full-black.png";
+import { Lock, CheckCircle2, ArrowLeft } from "lucide-react";
 
 const ResetPass = () => {
     const navigate = useNavigate();
@@ -15,7 +12,6 @@ const ResetPass = () => {
     const { loading } = useSelector((state) => state.auth);
     const location = useLocation();
     const token = location.pathname.split("/").at(-1);
-    console.log('Reset password token:', token);
     const dispatch = useDispatch();
     const [passwordUpdate, setPasswordUpdate] = useState(false);
 
@@ -25,54 +21,102 @@ const ResetPass = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 p-4 text-lg">
-            {
-                loading ? (
-                    <div>Loading...</div>
+        <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-8 sm:p-10 transition-all">
+            {/* Brand Logo */}
+            <div className="flex justify-center mb-6">
+                <Link to="/">
+                    <img src={Logo} alt="KK Tech Solution" className="h-[120px] w-auto object-contain" />
+                </Link>
+            </div>
 
-                ) : (
-                    <div>
-                        {
-                            passwordUpdate ? (
-                                
-                                <div className="flex flex-col items-center gap-5">
-                                    <p className= "text-4xl text-green-500">Password reset successfully!</p>
-
-                                    <p className="text-2xl">Redirecting to login...</p>
-                                </div>
-                            ) : (
-                                <div className="bg-white p-4 rounded-md shadow-md flex flex-col gap-5" >
-                                    <h2 className="text-2xl font-bold">Reset Password</h2>
-                                    <form onSubmit={handleOnSubmit} className="flex flex-col gap-4">
-                                        <input
-                                            type="password"
-                                            placeholder="New Password"
-                                            value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}
-                                            className="p-2 border border-gray-300 rounded"
-                                            required
-                                        />
-                                        <input
-                                            type="password"
-                                            placeholder="Confirm Password"
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                            className="p-2 border border-gray-300 rounded"
-                                            required
-                                        />
-                                        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-                                            Reset Password
-                                        </button>
-                                    </form>
-
-                                </div>
-                            )
-                        }
+            {loading ? (
+                <div className="py-12 flex flex-col items-center gap-3 text-slate-500">
+                    <div className="w-8 h-8 border-4 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-sm font-medium">Resetting your password...</p>
+                </div>
+            ) : passwordUpdate ? (
+                <div className="text-center space-y-4 py-4">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                        <CheckCircle2 className="w-6 h-6" />
                     </div>
-                )
-            }
+                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Password Reset Complete</h1>
+                    <p className="text-sm text-slate-600">Your password has been successfully updated.</p>
+                    <Link
+                        to="/login"
+                        className="inline-block w-full py-3 px-4 rounded-xl font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm transition-all"
+                    >
+                        Sign In with New Password
+                    </Link>
+                </div>
+            ) : (
+                <div>
+                    <div className="text-center mb-6">
+                        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Set New Password</h1>
+                        <p className="text-sm text-slate-500 mt-1">
+                            Choose a strong, unique password for your account.
+                        </p>
+                    </div>
+
+                    <form onSubmit={handleOnSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                                New Password
+                            </label>
+                            <div className="relative">
+                                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <Lock className="w-4 h-4" />
+                                </span>
+                                <input
+                                    type="password"
+                                    required
+                                    placeholder="••••••••"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                                Confirm New Password
+                            </label>
+                            <div className="relative">
+                                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <Lock className="w-4 h-4" />
+                                </span>
+                                <input
+                                    type="password"
+                                    required
+                                    placeholder="••••••••"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full py-3 px-4 rounded-xl font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm hover:shadow transition-all duration-200 mt-2"
+                        >
+                            Update Password
+                        </button>
+                    </form>
+
+                    <div className="text-center pt-6 mt-6 border-t border-slate-100">
+                        <Link
+                            to="/login"
+                            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-950 transition-colors"
+                        >
+                            <ArrowLeft className="w-3.5 h-3.5" />
+                            <span>Back to Login</span>
+                        </Link>
+                    </div>
+                </div>
+            )}
         </div>
     );
-}
+};
 
 export default ResetPass;
