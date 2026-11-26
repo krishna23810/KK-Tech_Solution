@@ -62,7 +62,6 @@ const About = () => {
             </div>
             </section>
             <ReviewSlider />
-            <Futter/>
         </div >
     );
 };

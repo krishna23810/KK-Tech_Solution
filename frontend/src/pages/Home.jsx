@@ -283,10 +283,6 @@ const Home = () => {
             
             </div>
             <ReviewSlider />
-            {/* section 4 */}
-
-            {/* section 5  footer*/}
-            <Futter className='mt-10 text-gray-400' />
         </div>
     )
 }

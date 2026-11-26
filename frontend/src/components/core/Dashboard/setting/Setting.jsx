@@ -1,23 +1,20 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { updateProfilePicture } from "../../../../services/operation/UpdateData"
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateProfilePicture, deleteUserAccount } from "../../../../services/operation/UpdateData";
 import DetailEdit from "./DetailEdit";
 import { useNavigate } from "react-router-dom";
-import { deleteUserAccount } from "../../../../services/operation/UpdateData";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { useForm } from "react-hook-form";
-import {changePassword} from "../../../../services/operation/AuthApi"
+import { changePassword } from "../../../../services/operation/AuthApi";
+import { Camera, Lock, AlertTriangle, UploadCloud } from "lucide-react";
 
 const Setting = () => {
     const { user } = useSelector((state) => state.profile);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState(null);
-
     const fileInputRef = useRef(null);
 
     const handleButtonClick = () => {
@@ -38,56 +35,84 @@ const Setting = () => {
 
     const handleUpload = () => {
         if (selectedFile) {
-            // Here you would typically upload the file to your server
-            console.log("Uploading file:", selectedFile);
             dispatch(updateProfilePicture(selectedFile));
-            // Reset after upload
             setSelectedFile(null);
             setPreview(null);
         }
     };
 
     const handleDeleteAccount = () => {
-        dispatch(deleteUserAccount(navigate));
+        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            dispatch(deleteUserAccount(navigate));
+        }
     };
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm();
 
     const onSubmit = (data) => {
-        console.log("Form data:", data);
         dispatch(changePassword(data.oldPassword, data.newPassword, data.confirmNewPassword, reset));
     };
 
-     const handleDiscard = () => {
+    const handleDiscardPassword = () => {
         reset();
     };
+
+    const currentProfilePic =
+        preview ||
+        user?.additionalInfo?.profilePicture ||
+        `https://api.dicebear.com/5.x/initials/svg?seed=${encodeURIComponent(
+            (user?.firstName || "U") + " " + (user?.lastName || "")
+        )}`;
+
     return (
-        <div className="w-full  flex flex-col gap-4  pr-16">
-            <div className="mx-auto w-full py-10 flex flex-col gap-4 items-start">
+        <div className="w-full max-w-4xl mx-auto flex flex-col gap-6 py-2">
+            {/* Page Header */}
+            <div className="pb-3 border-b border-slate-200">
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Settings & Preferences</h1>
+                <p className="text-sm text-slate-500 mt-0.5">
+                    Manage your personal information, security, and account settings
+                </p>
+            </div>
 
+            {/* Section 1: Profile Picture Card */}
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm transition-all hover:shadow-md">
+                <div className="pb-3 mb-4 border-b border-slate-100">
+                    <h2 className="text-lg font-bold text-slate-900">Profile Photo</h2>
+                    <p className="text-xs text-slate-500 mt-0.5">This picture will appear on your public profile</p>
+                </div>
 
-                <h1 className="text-white text-2xl">Edit Profile</h1>
+                <div className="flex flex-col sm:flex-row items-center gap-6">
+                    <div className="relative group">
+                        <img
+                            src={currentProfilePic}
+                            alt="Profile"
+                            className="w-24 h-24 rounded-full object-cover ring-4 ring-amber-400/20 shadow-md bg-slate-100"
+                        />
+                        <button
+                            type="button"
+                            onClick={handleButtonClick}
+                            className="absolute bottom-0 right-0 p-2 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm transition-all"
+                            title="Change photo"
+                        >
+                            <Camera className="w-4 h-4" />
+                        </button>
+                    </div>
 
-                {/* section 1 */}
-                <div className="flex w-[800px] gap-4 p-4 ml-10 rounded shadow-md bg-gray-800 text-white">
-                    <img
-                        src={preview || user?.additionalInfo?.profilePicture}
-                        alt="Profile"
-                        className="aspect-square w-[100px] h-[100px] rounded-full object-cover"
-                    />
-                    <div className="flex flex-col gap-2">
-                        <p className="text-gray-400">Profile Picture</p>
-
-                        <div className="flex items-center gap-2">
-
+                    <div className="flex flex-col items-center sm:items-start gap-3">
+                        <div className="flex items-center gap-3">
                             <button
-                                className="mt-2 bg-gray-700 text-white py-1 px-2 rounded hover:bg-gray-600 transition-colors"
+                                type="button"
                                 onClick={handleButtonClick}
+                                className="px-4 py-2 rounded-xl text-sm font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400 transition-colors"
                             >
-                                Change Picture
+                                Select New Photo
                             </button>
 
-                            {/* Hidden file input */}
                             <input
                                 type="file"
                                 ref={fileInputRef}
@@ -97,60 +122,136 @@ const Setting = () => {
                             />
 
                             {selectedFile && (
-                                <div className="mt-3">
-                                    <p className="text-sm text-gray-300">
-                                        Selected: {selectedFile.name}
-                                    </p>
-                                    <button
-                                        className="mt-2 bg-blue-600 text-white py-1 px-3 rounded hover:bg-blue-700 transition-colors"
-                                        onClick={handleUpload}
-                                    >
-                                        Upload
-                                    </button>
-                                </div>
+                                <button
+                                    type="button"
+                                    onClick={handleUpload}
+                                    className="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-sm font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm transition-all"
+                                >
+                                    <UploadCloud className="w-4 h-4" />
+                                    <span>Upload & Save</span>
+                                </button>
                             )}
                         </div>
+
+                        {selectedFile && (
+                            <p className="text-xs text-slate-500 font-medium">
+                                Ready to upload: <span className="text-slate-800">{selectedFile.name}</span>
+                            </p>
+                        )}
+                        <p className="text-xs text-slate-400">Supported formats: JPG, PNG, WEBP (Max 2MB)</p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Section 2: Personal Details Edit Form */}
+            <DetailEdit />
+
+            {/* Section 3: Password & Security */}
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm transition-all hover:shadow-md">
+                <div className="pb-3 mb-5 border-b border-slate-100 flex items-center justify-between">
+                    <div>
+                        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <Lock className="w-4 h-4 text-amber-500" />
+                            Update Password
+                        </h2>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                            Ensure your account is using a strong, unique password
+                        </p>
                     </div>
                 </div>
 
-                {/* section 2 */}
-                <DetailEdit />
-            </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {/* Old Password */}
+                        <div>
+                            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                                Current Password
+                            </label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                {...register("oldPassword", { required: "Current password is required" })}
+                            />
+                            {errors.oldPassword && (
+                                <p className="text-xs text-rose-500 mt-1">{errors.oldPassword.message}</p>
+                            )}
+                        </div>
 
-            {/* <ResetPassword /> */}
-            <div className="flex relative flex-col gap-4 w-[800px] p-4 ml-10 rounded shadow-md bg-gray-800 text-white">
-                <h1 className="text-white text-2xl">Reset Password</h1>
-                {/* <div className="flex  w-full gap-4 p-4 rounded shadow-md bg-gray-800 text-white"> */}
+                        {/* New Password */}
+                        <div>
+                            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                                New Password
+                            </label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                {...register("newPassword", { required: "New password is required" })}
+                            />
+                            {errors.newPassword && (
+                                <p className="text-xs text-rose-500 mt-1">{errors.newPassword.message}</p>
+                            )}
+                        </div>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="flex  gap-4 rounded shadow-md bg-gray-800 text-white">
-                    <div className="flex flex-col gap-2 w-[60%] justify-between ">
-                        <input type="text" placeholder="Old Password"  className="w-full text-black p-2 rounded-md"
-                        {...register("oldPassword" ,{ required: true }) }/>
-                        {errors.oldPassword && <span className="text-red-500">Old Password is required</span>}
-                        <input type="text" placeholder="New Password" className="w-full text-black p-2 rounded-md"
-                        {...register("newPassword" ,{ required: true }) }/>
-                        {errors.newPassword && <span className="text-red-500">New Password is required</span>}
-                        <input type="text" placeholder="Confirm New Password" className="w-full text-black p-2 rounded-md"
-                        {...register("confirmNewPassword" ,{ required: true }) }/>
-                        {errors.confirmNewPassword && <span className="text-red-500">Confirm New Password is required</span>}
+                        {/* Confirm New Password */}
+                        <div>
+                            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                                Confirm New Password
+                            </label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                {...register("confirmNewPassword", { required: "Please confirm your password" })}
+                            />
+                            {errors.confirmNewPassword && (
+                                <p className="text-xs text-rose-500 mt-1">
+                                    {errors.confirmNewPassword.message}
+                                </p>
+                            )}
+                        </div>
                     </div>
-                    <div className="flex flex-col  gap-3 w-[40%] items-center top-[109px] right-4">
-                        <button type="submit" className="  bg-yellow-500 text-black py-2  px-4 rounded">Save Changes</button>
 
-                        <button type="button" onClick={handleDiscard} className="  bg-red-500 text-black py-2 px-4 rounded">Discard Changes</button>
+                    <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                        <button
+                            type="button"
+                            onClick={handleDiscardPassword}
+                            className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="px-6 py-2.5 rounded-xl text-sm font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm hover:shadow transition-all duration-200 disabled:opacity-50"
+                        >
+                            {isSubmitting ? "Updating..." : "Update Password"}
+                        </button>
                     </div>
                 </form>
-                        {/* </div> */}
             </div>
 
-            <div className="flex w-[800px] gap-4 mt-10 p-4 ml-10 rounded shadow-md bg-gray-800 text-white">
-                <RiDeleteBinFill className="text-red-600 text-4xl" />
-                <div className="flex flex-col gap-2 items-start">
-                        <p>Delete Account</p>
-                        <p>Would you like to delete your account?</p>
-                        <p>This account may contain Paid Courses. Deleting your account is permanent and cannot be undone.</p>
-                        <button onClick={handleDeleteAccount} className=" text-red-600 py-2 rounded">
-                            I want to delete my account</button>
+            {/* Section 4: Danger Zone (Delete Account) */}
+            <div className="bg-rose-50/40 border border-rose-200/80 rounded-2xl p-6 shadow-sm">
+                <div className="flex flex-col sm:flex-row items-start gap-4">
+                    <div className="p-3 bg-rose-100 text-rose-600 rounded-xl">
+                        <AlertTriangle className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                        <h2 className="text-base font-bold text-rose-950">Danger Zone: Delete Account</h2>
+                        <p className="text-xs text-rose-800/80 mt-1 leading-relaxed">
+                            Deleting your account is permanent and cannot be undone. All your course progress,
+                            enrolled certificates, and personal data will be completely wiped from KK Tech Solution.
+                        </p>
+                        <button
+                            type="button"
+                            onClick={handleDeleteAccount}
+                            className="mt-4 px-4 py-2 rounded-xl text-sm font-semibold bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition-colors"
+                        >
+                            Permanently Delete My Account
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

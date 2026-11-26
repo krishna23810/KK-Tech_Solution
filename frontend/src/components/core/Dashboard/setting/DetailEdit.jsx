@@ -1,28 +1,36 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 import { setUser } from "../../../../slice/profileSlice";
-import { getProfileDetails, updateProfileDetails} from "../../../../services/operation/UpdateData";
+import { getProfileDetails, updateProfileDetails } from "../../../../services/operation/UpdateData";
 import { FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { User, Phone, Calendar, MapPin, FileText, Globe } from "lucide-react";
 
 const DetailEdit = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.profile);
-    const { register, handleSubmit, reset } = useForm();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { isSubmitting },
+    } = useForm();
 
     useEffect(() => {
         if (user) {
             reset({
-                firstName: user.firstName || '',
-                lastName: user.lastName || '',
-                about: user.additionalInfo?.about || '',
-                dateOfBirth: user.additionalInfo?.dateOfBirth ? new Date(user.additionalInfo.dateOfBirth).toISOString().split('T')[0] : '',
-                phoneNumber: user.additionalInfo?.phoneNumber || '',
-                address: user.additionalInfo?.address || '',
-                facebook: user.additionalInfo?.socialLinks?.facebook || '',
-                twitter: user.additionalInfo?.socialLinks?.twitter || '',
-                linkedin: user.additionalInfo?.socialLinks?.linkedin || '',
+                firstName: user.firstName || "",
+                lastName: user.lastName || "",
+                about: user.additionalInfo?.about || "",
+                dateOfBirth: user.additionalInfo?.dateOfBirth
+                    ? new Date(user.additionalInfo.dateOfBirth).toISOString().split("T")[0]
+                    : "",
+                phoneNumber: user.additionalInfo?.phoneNumber || "",
+                address: user.additionalInfo?.address || "",
+                facebook: user.additionalInfo?.socialLinks?.facebook || "",
+                twitter: user.additionalInfo?.socialLinks?.twitter || "",
+                linkedin: user.additionalInfo?.socialLinks?.linkedin || "",
             });
         }
     }, [user, reset]);
@@ -43,122 +51,204 @@ const DetailEdit = () => {
                     socialLinks: {
                         facebook: data.facebook || user.additionalInfo?.socialLinks?.facebook,
                         twitter: data.twitter || user.additionalInfo?.socialLinks?.twitter,
-                        linkedin: data.linkedin || user.additionalInfo?.socialLinks?.linkedin
-                    }
-                }
+                        linkedin: data.linkedin || user.additionalInfo?.socialLinks?.linkedin,
+                    },
+                },
             };
 
-            // Update UI immediately
             dispatch(setUser(updatedUser));
-
-            // Then make API call
             await dispatch(updateProfileDetails(data));
-
         } catch (error) {
             toast.error("Update failed");
-            // Revert on error
             dispatch(getProfileDetails());
         }
     };
 
     const handleDiscard = () => {
         reset();
+        toast("Changes reverted", { icon: "↩️" });
     };
 
     return (
-        <div className="flex w-[800px] flex-col gap-4 p-4 ml-10 rounded shadow-md bg-gray-800 text-white">
-            <h1>Edit Details</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="relative flex  gap-4">
-                <div className="flex gap-4 w-[50%] flex-col">
-                    <div className="flex flex-col gap-2">
-                        <label>First Name</label>
-                        <input
-                            type="text"
-                            className="border p-1 rounded text-black text-xl"
-                            {...register("firstName")}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <label>Last Name</label>
-                        <input
-                            type="text"
-                            className="border p-1 rounded text-black text-xl"
-                            {...register("lastName")}
-                        />
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="pb-4 mb-6 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                    <h2 className="text-lg font-bold text-slate-900">Personal Information</h2>
+                    <p className="text-xs text-slate-500 mt-0.5">Update your personal and contact details</p>
+                </div>
+            </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {/* First Name */}
+                    <div>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                            First Name
+                        </label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <User className="w-4 h-4" />
+                            </span>
+                            <input
+                                type="text"
+                                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                placeholder="First Name"
+                                {...register("firstName")}
+                            />
+                        </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <label>About</label>
+                    {/* Last Name */}
+                    <div>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                            Last Name
+                        </label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <User className="w-4 h-4" />
+                            </span>
+                            <input
+                                type="text"
+                                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                placeholder="Last Name"
+                                {...register("lastName")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Phone Number */}
+                    <div>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                            Phone Number
+                        </label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <Phone className="w-4 h-4" />
+                            </span>
+                            <input
+                                type="tel"
+                                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                placeholder="+91 98765 43210"
+                                {...register("phoneNumber")}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Date of Birth */}
+                    <div>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                            Date of Birth
+                        </label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <Calendar className="w-4 h-4" />
+                            </span>
+                            <input
+                                type="date"
+                                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                {...register("dateOfBirth")}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* About Bio */}
+                <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                        Bio / About You
+                    </label>
+                    <div className="relative">
                         <textarea
-                            className="border p-1 rounded text-black text-xl h-[225px]"
+                            rows={3}
+                            className="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all resize-none"
+                            placeholder="Tell the community a little about yourself, your goals, and interests..."
                             {...register("about")}
                         />
                     </div>
                 </div>
-                <div className="flex gap-4 w-[50%] flex-col">
-                    <div className="flex flex-col gap-2">
-                        <label>Date of Birth</label>
-                        <input
-                            type="date"
-                            className="border p-1 rounded text-black text-xl"
-                            {...register("dateOfBirth")}
-                        />
-                    </div>
 
-                    <div className="flex flex-col gap-2">
-                        <label>Phone Number</label>
+                {/* Address */}
+                <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
+                        Address / Location
+                    </label>
+                    <div className="relative">
+                        <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <MapPin className="w-4 h-4" />
+                        </span>
                         <input
                             type="text"
-                            className="border p-1 rounded text-black text-xl"
-                            {...register("phoneNumber")}
-                        />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label>Address</label>
-                        <input
-                            type="text"
-                            className="border p-1 rounded text-black text-xl"
+                            className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                            placeholder="City, State, Country"
                             {...register("address")}
                         />
                     </div>
-                    <div>
-                        <label>Social Links</label>
-                        <div className="flex flex-col gap-4 text-3xl ">
-                            <div className="flex gap-4">
-                                <FaFacebook className="text-blue-600" />
-                                <input
-                                    type="text"
-                                    className="border p-1 rounded text-black text-xl"
-                                    placeholder="Facebook URL"
-                                    {...register("facebook")}
-                                />
-                            </div>
-                            <div className="flex gap-4">
-                                <FaTwitter className="text-blue-400" />
-                                <input
-                                    type="text"
-                                    className="border p-1 rounded text-black text-xl"
-                                    placeholder="Twitter URL"
-                                    {...register("twitter")}
-                                />
-                            </div>
-                            <div className="flex gap-4">
-                                <FaLinkedin className="text-blue-700" />
-                                <input
-                                    type="text"
-                                    className="border p-1 rounded text-black text-xl"
-                                    placeholder="LinkedIn URL"  
-                                    {...register("linkedin")}
-                                />
-                            </div>
+                </div>
+
+                {/* Social Profiles */}
+                <div className="pt-2">
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-3 flex items-center gap-1.5">
+                        <Globe className="w-4 h-4 text-slate-500" />
+                        Social Profile Links
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {/* Facebook */}
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <FaFacebook className="w-4 h-4 text-blue-600" />
+                            </span>
+                            <input
+                                type="url"
+                                className="w-full pl-10 pr-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                placeholder="Facebook Profile URL"
+                                {...register("facebook")}
+                            />
+                        </div>
+
+                        {/* Twitter */}
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <FaTwitter className="w-4 h-4 text-sky-500" />
+                            </span>
+                            <input
+                                type="url"
+                                className="w-full pl-10 pr-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                placeholder="Twitter / X Profile URL"
+                                {...register("twitter")}
+                            />
+                        </div>
+
+                        {/* LinkedIn */}
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <FaLinkedin className="w-4 h-4 text-blue-700" />
+                            </span>
+                            <input
+                                type="url"
+                                className="w-full pl-10 pr-3.5 py-2 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 focus:bg-white transition-all"
+                                placeholder="LinkedIn Profile URL"
+                                {...register("linkedin")}
+                            />
                         </div>
                     </div>
-                    <div className="flex absolute gap-3 top-[450px] right-0">
-                        <button type="submit" className="  bg-yellow-500 text-black py-2 px-4 rounded">Save Changes</button>
+                </div>
 
-                        <button type="button" onClick={handleDiscard} className="  bg-red-500 text-black py-2 px-4 rounded">Discard Changes</button>
-                    </div>
+                {/* Form Action Buttons (Clean & in-flow) */}
+                <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100">
+                    <button
+                        type="button"
+                        onClick={handleDiscard}
+                        className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+                    >
+                        Discard
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="px-6 py-2.5 rounded-xl text-sm font-semibold bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm hover:shadow transition-all duration-200 disabled:opacity-50"
+                    >
+                        {isSubmitting ? "Saving..." : "Save Changes"}
+                    </button>
                 </div>
             </form>
         </div>
