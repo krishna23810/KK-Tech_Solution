@@ -19,40 +19,36 @@ const Home = () => {
     return (
         <div>
             {/* section 1 */}
-            <div className='flex relative mx-auto flex-col w-11/12 items-center text-white'>
+            <div className='flex relative mx-auto flex-col w-11/12 items-center text-slate-900'>
                 <Link to={"/signup"}>
-                    <div className='flex flex-row items-center justify-center mt-5 gap-10'>
-                        <img src={Logo} alt="Logo" className="h-[180px] w-[250px] object-cover" loading='lazy' />
-                        <div className='mt-6 flex items-center justify-center gap-2 fonst-bold bg-gray-500 text-gray-300 px-4 py-2 
-                    transition-all duration-300 hover:bg-red-700 hover:text-white hover:scale-105 rounded-full'>
-                            <div className='flex items-center gap-2 flex-row gap- rounded-full '>
-                                <p>Become a Instructor</p>
-                                <FaArrowRight />
-                            </div>
+                    <div className='flex flex-row items-center justify-center mt-6 gap-3'>
+                        <div className='flex items-center gap-2 font-semibold bg-slate-100 border border-slate-200 text-slate-700 px-4 py-2 
+                    transition-all duration-300 hover:bg-amber-400 hover:text-slate-950 hover:scale-105 rounded-full text-sm shadow-sm'>
+                            <span>Become an Instructor</span>
+                            <FaArrowRight className="text-xs" />
                         </div>
                     </div>
                 </Link>
 
-                <div className='mt-5 text-center text-4xl font-bold'>
-                    Empower your future with
-                    <HighlightText text={"Coding Skills"} />
-                </div>
+                <h1 className='mt-6 text-center text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight'>
+                    Empower your future with <HighlightText text={"Coding Skills"} />
+                </h1>
 
-                <div className='mt-6 text-center text-2xl font-semibold text-gray-400'>
-                    Learn from the best instructors in the industry and take your skills to the next level
-                </div>
+                <p className='mt-4 text-center text-lg sm:text-xl font-medium text-slate-600 max-w-2xl'>
+                    Learn from the best instructors in the industry and take your skills to the next level.
+                </p>
 
-                <div className='mt-10 flex items-center justify-center gap-4'>
-                    <CliButton Linkto={"/signup"} active={false}>
-                        Learn M ore
+                <div className='mt-8 flex items-center justify-center gap-4'>
+                    <CliButton Linkto={"/signup"} active={false} isWhite={true}>
+                        Learn More
                     </CliButton>
                     <CliButton Linkto={"/login"} active={true}>
                         Book a Demo
                     </CliButton>
                 </div>
 
-                <div className='mt-10 mx-3 my-10 w-8/12 h-[500px] relative border-2 border-indigo-400 shadow-2xl shadow-indigo-500/50 z-10 '>
-                    <div className='mt-3 mx-3 my-4 bg-white w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'>
+                <div className='mt-10 mx-3 my-10 w-10/12 h-[550px] relative border-2 border-indigo-400 shadow-2xl shadow-indigo-500/50 z-10 '>
+                    <div className='mt-3 mx-3 my-4 bg-gray-400  w-full h-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'>
                     </div>
                     <div className='absolute inset-0 bg-gradient-to-r from-black/90 to-transparent z-20'></div>
                     <video autoPlay muted loop className='w-full h-full object-cover  overflow-hidden z-20'>
@@ -176,7 +172,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="flex flex-col items-start justify-center my-6">
-                        <p className="text-xl text-gray-700 font-semibold ">KK TECHSOLUTION is your gateway to mastering tech skills with expert-led courses.</p>
+                        <p className="text-xl text-gray-700 font-semibold ">Lets Skillo is your gateway to mastering tech skills with expert-led courses.</p>
                         <p className="text-lg text-gray-500 mb-4">Join us to accelerate your learning and build a successful career in technology.</p>
                         <CliButton Linkto={"/signup"} active={true}>
                             <div className='flex flex-row gap-2 items-center'>
@@ -267,7 +263,7 @@ const Home = () => {
                             </div>
                         </div>
                         <div>
-                            <p className='text-xl text-gray-600'> Instructor from Around the world. Teach millions of students on. KK  TechSolution. We provide the tools and skills. To teach what you love. </p>
+                            <p className='text-xl text-gray-600'> Instructors from around the world teach millions of students on Lets Skillo. We provide the tools and skills to teach what you love. </p>
                         </div>
                         <br />
 
@@ -280,7 +276,7 @@ const Home = () => {
 
                     </div>
                 </div>
-            
+
             </div>
             <ReviewSlider />
         </div>

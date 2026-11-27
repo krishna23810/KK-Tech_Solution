@@ -16,7 +16,7 @@ const About = () => {
                 <div className="flex flex-col gap-5 w-1/2 items-center justify-center absolute top-[300px] left-[400px] transform -translate-x-1/2 -translate-y-1/2 text-center">
                     <p className="text-7xl text-gray-700">Divining innovation in Online Education for a
                         <HighlightText text="Bright Future." /> </p>
-                    <p className="text-xl text-gray-500">KK tech Solution Forefront of driving innovating in online education. We're passionate about creating a brighter future by
+                    <p className="text-xl text-gray-500">Lets Skillo is at the forefront of driving innovation in online education. We're passionate about creating a brighter future by
                         offering cutting-edge courses, leveraging emerging technologies </p>
                 </div>
                 <img src={Image4} alt="About Us 5" className="w-full h-full object-cover" />

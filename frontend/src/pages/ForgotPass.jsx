@@ -19,9 +19,14 @@ const ForgotPass = () => {
     return (
         <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xl p-8 sm:p-10 transition-all">
             {/* Brand Logo */}
-            <div className="flex justify-center mb-6">
-                <Link to="/">
-                    <img src={Logo} alt="KK Tech Solution" className="h-[120px] w-auto object-contain" />
+            <div className="flex justify-center mb-5">
+                <Link to="/" className="flex items-center gap-2.5 group">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <span className="text-slate-950 font-black text-lg tracking-tighter">LS</span>
+                    </div>
+                    <span className="text-2xl font-extrabold tracking-tight text-slate-900">
+                        Lets<span className="text-amber-500">Skillo</span>
+                    </span>
                 </Link>
             </div>
 

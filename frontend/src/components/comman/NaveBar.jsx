@@ -71,9 +71,14 @@ const NavBar = () => {
     return (
         <header className="fixed top-0 left-0 right-0 h-[50px] flex items-center justify-center bg-white border-b border-slate-200 shadow-sm z-50">
             <div className="w-11/12 max-w-7xl text-slate-800 p-4 flex justify-between items-center">
-                {/* Logo */}
-                <Link to="/" className="flex items-center">
-                    <img src={Logo} alt="KK Tech Solution" className="h-10 w-auto object-contain" loading="lazy" />
+                {/* Logo & Brand Wordmark */}
+                <Link to="/" className="flex items-center gap-2.5 group">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                        <span className="text-slate-950 font-black text-base tracking-tighter">LS</span>
+                    </div>
+                    <span className="text-2xl font-extrabold tracking-tight text-slate-900">
+                        Lets<span className="text-amber-500">Skillo</span>
+                    </span>
                 </Link>
 
                 {/* Navigation Links */}

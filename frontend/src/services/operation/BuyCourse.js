@@ -45,7 +45,7 @@ export async function buyCourse(courses, token,userDetail,navigate,dispatch ,fro
             "key": process.env.RAZORPAY_KEY_ID || "rzp_test_doGT3JACNPOQ3k", // Public Token
             "amount": orderResponse.data.amount, // Amount is in currency subunits. Default currency is INR. 
             "currency": orderResponse.data.currency,
-            "name": "KK tech solution", //your business name
+            "name": "Lets Skillo", //your business name
             description:"Thank You to purchasing the Course" ,
             "order_id": orderResponse.data.orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "image": image, //Image URL

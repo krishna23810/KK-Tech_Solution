@@ -22,7 +22,7 @@ const AuthLayout = () => {
 
             {/* Subtle Footer */}
             <footer className="py-3 text-center text-xs text-slate-400">
-                <p>© {new Date().getFullYear()} KK TECH SOLUTION. All rights reserved.</p>
+                <p>© {new Date().getFullYear()} Lets Skillo. All rights reserved.</p>
             </footer>
         </div>
     );

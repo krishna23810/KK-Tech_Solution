@@ -96,7 +96,7 @@ const Futter = () => {
                 </div>
             <div className="w-8/12 border-[1px] border-gray-500 mb-4"></div>
                 <div className='flex gap-60 mb-4 items-center flex-wrap'>
-                    <p className='text-lg text-gray-400 w-[50% ]'>Copyright © 2025 KK TECHSOLUTION. All rights reserved.</p>
+                    <p className='text-sm text-slate-400'>Copyright © 2026 Lets Skillo. All rights reserved.</p>
                     <p className='text-lg '>Made with ❤️ by Krishna</p>
                 </div>
             </div>

@@ -242,7 +242,7 @@ const Setting = () => {
                         <h2 className="text-base font-bold text-rose-950">Danger Zone: Delete Account</h2>
                         <p className="text-xs text-rose-800/80 mt-1 leading-relaxed">
                             Deleting your account is permanent and cannot be undone. All your course progress,
-                            enrolled certificates, and personal data will be completely wiped from KK Tech Solution.
+                            enrolled certificates, and personal data will be completely wiped from Lets Skillo.
                         </p>
                         <button
                             type="button"
