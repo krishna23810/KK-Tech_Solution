@@ -5,7 +5,7 @@ import { setPaymentLoading } from "../../slice/courseSlice";
 import { resetCart } from "../../slice/cartSlice";
 import { setFromCart } from "../../slice/cartSlice";
 
-const { paymentApi } = require("../apis");
+import { paymentApi } from "../apis";
 
 
 

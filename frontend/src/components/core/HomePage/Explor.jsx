@@ -43,15 +43,13 @@ export const Explore = () => {
 
                 {courses.map((course, index) => {
                     return (
-                        <div>
-
+                        <div key={index}>
                             <CourseCard
-                                key={index}
                                 cardData={course}
                                 currentCard={currentCard}
                                 setCurrentCard={setCurrentCard}
                             />
-                            </div>
+                        </div>
                     );
                 })}
 

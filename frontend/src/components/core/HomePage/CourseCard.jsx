@@ -2,7 +2,7 @@ import React from "react";
 import { HiUsers } from "react-icons/hi";
 import { LuFileVideo } from "react-icons/lu";
 
-const CourseCard = ({ key, cardData, currentCard, setCurrentCard }) => {
+const CourseCard = ({ cardData, currentCard, setCurrentCard }) => {
     const handleCardClick = () => {
         setCurrentCard(cardData.heading);
     }
